@@ -11,13 +11,13 @@ const del = require('del');
 const ttf2woff = require('gulp-ttf2woff');
 const ttf2woff2 = require('gulp-ttf2woff2');
 const imagemin = require("gulp-imagemin");
-const webp = require('gulp-webp');
-const webphtml = require('gulp-webp-html');
-const webpcss = require('gulp-webpcss');
+// const webp = require('gulp-webp');
+// const webphtml = require('gulp-webp-html');
+// const webpcss = require('gulp-webpcss');
 const fonter = require('gulp-fonter');
-const clean_css = require("gulp-clean-css"),
-const rename = require("gulp-rename"),
-const svgSprite = require("gulp-svg-sprite"),
+const clean_css = require("gulp-clean-css");
+const rename = require("gulp-rename");
+const svgSprite = require("gulp-svg-sprite");
 //Подключаем автообновление браузера ///////////////////////////////////////////////////////////////////////////////////////////////////////
 function browserSync() {
 	browsersync.init({
@@ -33,7 +33,7 @@ function browserSync() {
 function html() {
 	return src(['app/**/*.html', '!app/**/_*.html'])
 		.pipe(fileInclude())
-		.pipe(webphtml())//Этот плагин заменяет в html обычный тег img на конструкцию picture-source-img, для подключения формата webp в браузерах, которые его поддерживают.
+		// .pipe(webphtml())//Этот плагин заменяет в html обычный тег img на конструкцию picture-source-img, для подключения формата webp в браузерах, которые его поддерживают.
 		.pipe(dest('dist/'))
 		.pipe(browsersync.stream())
 }
@@ -50,7 +50,7 @@ function styles() {
 			cascade: false,
 			grid: true
 		}))
-		.pipe(webpcss())//Этот плагин устанавливают если нужно использование webp в свойстве background-image в scss, для него так же нужно в файл js добавить скрипт, определяющий поддержку браузером формата wepb.
+		// .pipe(webpcss())//Этот плагин устанавливают если нужно использование webp в свойстве background-image в scss, для него так же нужно в файл js добавить скрипт, определяющий поддержку браузером формата wepb.
 		.pipe(dest('dist/css/'))
 		.pipe(scss({
 			outputStyle: 'compressed'
@@ -74,10 +74,10 @@ function scripts() {
 //Собираем все css файлы подключаемых плагинов, конкатинируем их в 1 минифицированный файл css и закидываем его в папку dist/css с именем libs.min.css///////////////////////////////////////////////////////////////////////////////////////////////////////
 function stylesLibs() {
 	return src([
-		'node_modules/normalize.css/normalize.css'
-		// 'node_modules/slick-carousel/slick/slick.css',
-		// 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.css',
-		// 'node_modules/animate.css/animate.css'
+		'node_modules/normalize.css/normalize.css',
+		'node_modules/slick-carousel/slick/slick.css',
+		'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.css',
+		'node_modules/animate.css/animate.css'
 	])
 		.pipe(scss({
 			outputStyle: 'compressed'
@@ -90,10 +90,11 @@ function stylesLibs() {
 //Собираем все js файлы подключаемых плагинов, конкатинируем их в 1 минифицированный файл js и закидываем его в папку dist/js с именем libs.min.js///////////////////////////////////////////////////////////////////////////////////////////////////////
 function scriptsLibs() {
 	return src([
-		'node_modules/jquery/dist/jquery.js'
-		// 'node_modules/slick-carousel/slick/slick.js',
-		// 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js',
-		// 'node_modules/wow.js/dist/wow.js'
+		'node_modules/jquery/dist/jquery.js',
+		'node_modules/slick-carousel/slick/slick.js',
+		// 'node_modules/mixitup/dist/mixitup.js',
+		'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js',
+		'node_modules/wow.js/dist/wow.js'
 	])
 		.pipe(uglify())
 		.pipe(concat('libs.min.js'))
@@ -104,12 +105,14 @@ function scriptsLibs() {
 
 //Следим за всеми файлами jpg, png, svg, gif, ico, webp в папке app/img, конвертируем их в формат webp со сжатием в 70% и закидываем их в папку dist/img. Так же Оригинальные файлы сжимаем до 3 уровня из доступных 7(можно в функции этот параметр поменять) и отправляем сжатые оригиналы в папку dist/img. Все удаленные файлы в папке app/img удалятся из нпапки dist/img при следующем запуске gulp.///////////////////////////////////////////////////////////////////////////////////////////////////////
 function images() {
-	return src('app/img/**/*.{jpg,png,svg,gif,ico,webp}')
-		.pipe(webp({
-			quality: 70
-		}))
+	// return src('app/img/**/*.{jpg,png,svg,gif,ico,webp}')
+	return src('app/img/**/*.{jpg,png,svg,gif,ico}')
+		// .pipe(webp({
+		// 	quality: 70
+		// }))
 		.pipe(dest('dist/img/'))
 		.pipe(src('app/img/**/*.{jpg,png,svg,gif,ico,webp}'))
+		.pipe(src('app/img/**/*.{jpg,png,svg,gif,ico}'))
 		.pipe(
 			imagemin({
 				progressive: true,
@@ -127,7 +130,8 @@ function watching() {
 	watch(['app/scss/**/*.scss'], styles);
 	watch(['app/**/*.html'], html);
 	watch(['app/js/**/*.js'], scripts);
-	watch(['app/img/**/*.{jpg,png,svg,gif,ico,webp}'], images);
+	// watch(['app/img/**/*.{jpg,png,svg,gif,ico,webp}'], images);
+	watch(['app/img/**/*.{jpg,png,svg,gif,ico}'], images);
 }
 
 //Функция удаления папки dist. Срабатывает при каждом запуске gulp, перед всеми функциями.///////////////////////////////////////////////////////////////////////////////////////////////////////
