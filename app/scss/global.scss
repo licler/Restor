@@ -59,3 +59,13 @@ ul, li{
     padding: 0 15px;
     margin: 0 auto;
 }
+body {
+	height: 100%;
+	min-width: $minWidth;
+	line-height: 24px;
+	font-family: $fontFamily;
+	color: $text;
+	font-size: 14px;
+	line-height: 19,07px;
+	font-weight: 400;
+}
