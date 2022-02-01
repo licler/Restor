@@ -1,0 +1,50 @@
+// start slogan
+.slogan {
+margin-bottom: 150px;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -73px;
+  }
+  &__box {
+    max-width: 349px;
+    width: 100%;
+    box-shadow: 10px 10px 40px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 15px;
+
+    
+  }
+  &__box-inner {
+    margin: 0 auto;
+    text-align: center;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+  }
+  &__name {
+    font-size: 26px;
+    color: #000;
+    font-family: "Tinos-Regular";
+    margin-bottom: 20px;
+    margin-top: -6px;
+  }
+
+  &__name-note {
+    color: #bc9060;
+  }
+  &__text {
+    color: #656363;
+    font-family: "Tinos-Regular";
+    font-size: 26px;
+    line-height: 29px;
+    padding: 0 5px;
+
+  }
+}
+
+// end slogan
