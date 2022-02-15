@@ -1,0 +1,28 @@
+// start dinner
+.dinner {
+  padding: 132px 0 150px;
+  &__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 139px;
+    text-align: center;
+  }
+  &__link:first-child {
+    //   grid-column: span 2;
+    grid-row: span 3;
+  }
+  &__box {
+    max-width: 635px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    grid-gap: 0 30px;
+    
+  }
+  &__images--big {
+      max-width: 445px;
+  }
+}
+
+// end dinner
